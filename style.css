@@ -1878,8 +1878,8 @@ body.modal-open {
         font-size: 2.7rem;
     	margin-bottom: 15px;
 		margin-top: 25px;
-		margin-left: 60px;
-		margin-right: 60px;
+		margin-left: 55px;
+		margin-right: 55px;
 		font-weight: 700;
     }
 
@@ -1938,4 +1938,5 @@ body.modal-open {
     transform: translateX(-20px);
     transition: opacity 0.5s ease-out, transform 0.2s ease-out;
 }
+
 

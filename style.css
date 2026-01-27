@@ -1741,13 +1741,6 @@ body.modal-open {
 
 /* tambahan untuk section portofolio */
 
-/* style 360 foto */
-#360-photo {
-    height: 500px;
-    width: 100%;
-    margin: auto;
-}
-
 .portfolio-item.hidden  {
     display: none;
 }
@@ -1938,5 +1931,6 @@ body.modal-open {
     transform: translateX(-20px);
     transition: opacity 0.5s ease-out, transform 0.2s ease-out;
 }
+
 
 

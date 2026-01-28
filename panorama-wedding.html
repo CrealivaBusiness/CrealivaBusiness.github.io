@@ -10,7 +10,9 @@
 <section id="panorama" style="
   width:100%;
   max-width:1100px;
-  height:320px;
+  height:45vh;
+  min-height:260px;
+  max-height:420px;
   margin:80px auto;
   border-radius:18px;
   overflow:hidden;
@@ -38,8 +40,8 @@
   const geometry = new Marzipano.EquirectGeometry([{ width: 4000 }]);
 
   /* ===== FOV SETTING ===== */
-  const DEFAULT_FOV = isMobile ? Math.PI / 3 : Math.PI / 2.2;
-  const MIN_FOV = Math.PI / 6;   // zoom in max (~3x)
+  const DEFAULT_FOV = isMobile ? Math.PI / 4 : Math.PI / 2.2;
+  const MIN_FOV = Math.PI / 8;   // zoom in max (~3x)
   const MAX_FOV = Math.PI / 2;   // zoom out max (~0.5x)
 
   const limiter = Marzipano.RectilinearView.limit.traditional(

@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 	<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+	<script src="https://unpkg.com/aframe-gesture-detector@4.0.5/dist/aframe-gesture-detector.min.js"></script>
 </head>
 <body>
 <img class="commitment-background-logo" src="cvteam.png" alt="Logo Crealiva Background">
@@ -126,10 +127,35 @@
     </div>
 </section>
 
-<section id="360-photo" style="height: 500px;">
-        <a-scene embedded style="height: 100%; width: 100%;">
-		<a-sky src="https://github.com/CrealivaBusiness/CrealivaBusiness.github.io/blob/main/Panoramaweddingc.png?raw=true"></a-sky>
-            </a-scene>
+<section id="360-photo">
+        <a-scene>
+   <a-entity
+    camera
+    look-controls
+    wasd-controls="enabled: false"
+    position="0 1.6 0"
+    fov="80">
+  </a-entity>
+  
+  <a-sky 
+    src="Panoramawcr.jpg">
+  </a-sky>
+</a-scene>
+
+  <script>
+const sceneEl = document.querySelector('a-scene');
+
+sceneEl.addEventListener('loaded', () => {
+  const camera = sceneEl.camera.el;
+  let fov = 80;
+
+  window.addEventListener('wheel', (e) => {
+    fov += e.deltaY * 0.05;
+    fov = Math.min(100, Math.max(30, fov));
+    camera.setAttribute('camera', 'fov', fov);
+  });
+});
+</script>
 </section>
 
     <div class="container">
@@ -469,5 +495,6 @@
 </body>
 
 </html>
+
 
 

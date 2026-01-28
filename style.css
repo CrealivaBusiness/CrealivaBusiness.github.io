@@ -680,12 +680,6 @@ a:hover {
   }
 }
 
-/* 360-photo */
-
-	.a-scene {
-      width: 100%;
-      height: 100vh;
-    }
 
 
 /* KOMITMEN */
@@ -1935,6 +1929,7 @@ body.modal-open {
     transform: translateX(-20px);
     transition: opacity 0.5s ease-out, transform 0.2s ease-out;
 }
+
 
 
 

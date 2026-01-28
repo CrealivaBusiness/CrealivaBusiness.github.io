@@ -128,72 +128,107 @@
     </div>
 </section>
 
-<section id="360-photo" style="
+<section id="panorama" style="
   width:100%;
-  max-width:1100px;
-  height:320px;
+  max-width:1300px;
+  height:70vh;
+  min-height:300px;
+  max-height:490px;
   margin:80px auto;
   border-radius:18px;
   overflow:hidden;
+  position:relative;
 ">
 
-  <a-scene embedded style="width:100%; height:100%;">
-    
-    <a-entity
-      id="cam"
-      camera="fov:80"
-      look-controls="touchEnabled:true"
-      wasd-controls="enabled:false"
-      position="0 1.6 0">
-    </a-entity>
-
-    <a-sky src="Panoramawcr.jpg"></a-sky>
-
-  </a-scene>
-
-  <script>
-    const scene = document.querySelector('#360-photo');
-    const cam = document.querySelector('#cam');
-    let fov = 80;
-
-    /* DESKTOP ZOOM */
-    scene.addEventListener('wheel', e => {
-      e.preventDefault();
-      fov += e.deltaY * 0.05;
-      fov = Math.max(35, Math.min(95, fov));
-      cam.setAttribute('camera', 'fov', fov);
-    }, { passive:false });
-
-    /* MOBILE PINCH ZOOM */
-    let startDist = 0;
-
-    scene.addEventListener('touchstart', e => {
-      if (e.touches.length === 2) {
-        startDist = Math.hypot(
-          e.touches[0].pageX - e.touches[1].pageX,
-          e.touches[0].pageY - e.touches[1].pageY
-        );
-      }
-    }, { passive:false });
-
-    scene.addEventListener('touchmove', e => {
-      if (e.touches.length === 2) {
-        e.preventDefault();
-        const newDist = Math.hypot(
-          e.touches[0].pageX - e.touches[1].pageX,
-          e.touches[0].pageY - e.touches[1].pageY
-        );
-
-        fov -= (newDist - startDist) * 0.08;
-        fov = Math.max(35, Math.min(95, fov));
-        cam.setAttribute('camera', 'fov', fov);
-
-        startDist = newDist;
-      }
-    }, { passive:false });
-  </script>
+  <div id="pano" style="width:100%; height:100%;"></div>
 
 </section>
+
+<script src="https://unpkg.com/marzipano@0.10.2/dist/marzipano.js"></script>
+
+<script>
+  const panoElement = document.getElementById('pano');
+
+  const isMobile = window.innerWidth < 768;
+
+  const viewer = new Marzipano.Viewer(panoElement, {
+    controls: { mouseViewMode: 'drag' }
+  });
+
+  const source = Marzipano.ImageUrlSource.fromString(
+    "https://raw.githubusercontent.com/CrealivaBusiness/CrealivaBusiness.github.io/main/Panoramawcr.jpg"
+  );
+
+  const geometry = new Marzipano.EquirectGeometry([{ width: 4000 }]);
+
+  /* ===== FOV SETTING ===== */
+  const DEFAULT_FOV = isMobile ? Math.PI / 8 : Math.PI / 1.5;
+  const MIN_FOV = Math.PI / 5;   // zoom in max (~3x)
+  const MAX_FOV = Math.PI / 2;   // zoom out max (~0.5x)
+
+  const limiter = Marzipano.RectilinearView.limit.traditional(
+    1024,
+    Math.PI
+  );
+
+  const view = new Marzipano.RectilinearView(
+    { yaw: 0, pitch: 0, fov: DEFAULT_FOV },
+    limiter
+  );
+
+  const scene = viewer.createScene({
+    source,
+    geometry,
+    view
+  });
+
+  scene.switchTo();
+
+  /* ===== DESKTOP SCROLL ZOOM ===== */
+  panoElement.addEventListener('wheel', e => {
+    e.preventDefault();
+
+    const newFov = Math.max(
+      MIN_FOV,
+      Math.min(MAX_FOV, view.fov() + e.deltaY * 0.0001)
+    );
+
+    view.setFov(newFov);
+  }, { passive: false });
+
+  /* ===== MOBILE PINCH ZOOM ===== */
+  let startDist = null;
+
+  panoElement.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      startDist = Math.hypot(
+        e.touches[0].pageX - e.touches[1].pageX,
+        e.touches[0].pageY - e.touches[1].pageY
+      );
+    }
+  }, { passive: false });
+
+  panoElement.addEventListener('touchmove', e => {
+    if (e.touches.length === 2 && startDist) {
+      e.preventDefault();
+
+      const newDist = Math.hypot(
+        e.touches[0].pageX - e.touches[1].pageX,
+        e.touches[0].pageY - e.touches[1].pageY
+      );
+
+      const delta = (startDist - newDist) * 0.0003;
+
+      const newFov = Math.max(
+        MIN_FOV,
+        Math.min(MAX_FOV, view.fov() + delta)
+      );
+
+      view.setFov(newFov);
+      startDist = newDist;
+    }
+  }, { passive: false });
+</script>
 
 
     <div class="container">
@@ -533,6 +568,7 @@
 </body>
 
 </html>
+
 
 
 

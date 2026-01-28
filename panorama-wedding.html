@@ -27,81 +27,81 @@
 
 <script>
   const panoElement = document.getElementById('pano');
-  const isMobile = window.innerWidth < 768;
 
-  /* ===== VIEWER ===== */
-  const viewer = new Marzipano.Viewer(panoElement, {
-    controls: { mouseViewMode: 'drag' }
-  });
+  function initPanorama() {
+    const isMobile = window.innerWidth < 768;
 
-  const source = Marzipano.ImageUrlSource.fromString(
-    "https://raw.githubusercontent.com/CrealivaBusiness/CrealivaBusiness.github.io/main/Panoramawcr.jpg"
-  );
+    const viewer = new Marzipano.Viewer(panoElement, {
+      controls: { mouseViewMode: 'drag' }
+    });
 
-  const geometry = new Marzipano.EquirectGeometry([{ width: 4000 }]);
+    const source = Marzipano.ImageUrlSource.fromString(
+      "https://raw.githubusercontent.com/CrealivaBusiness/CrealivaBusiness.github.io/main/Panoramawcr.jpg"
+    );
 
-  /* ===== FOV (ANTI GEPENG) ===== */
-  const DEFAULT_FOV = isMobile ? Math.PI / 3.2 : Math.PI / 2.6;
-  const MIN_FOV = Math.PI / 5;    // zoom in max (~3x)
-  const MAX_FOV = Math.PI / 2.3;  // zoom out max (~0.5x)
+    const geometry = new Marzipano.EquirectGeometry([{ width: 4000 }]);
 
-  /* ===== LIMITER (BATASI ATAS BAWAH) ===== */
-  const limiter = Marzipano.RectilinearView.limit.traditional(
-    1024,
-    Math.PI,
-    { pitch: Math.PI / 4 } // << ini kunci anti gepeng
-  );
+    const DEFAULT_FOV = isMobile ? Math.PI / 3.2 : Math.PI / 2.6;
+    const MIN_FOV = Math.PI / 5;
+    const MAX_FOV = Math.PI / 2.3;
 
-  const view = new Marzipano.RectilinearView(
-    { yaw: 0, pitch: 0, fov: DEFAULT_FOV },
-    limiter
-  );
+    const limiter = Marzipano.RectilinearView.limit.traditional(
+      1024,
+      Math.PI,
+      { pitch: Math.PI / 4 }
+    );
 
-  const scene = viewer.createScene({
-    source,
-    geometry,
-    view
-  });
+    const view = new Marzipano.RectilinearView(
+      { yaw: 0, pitch: 0, fov: DEFAULT_FOV },
+      limiter
+    );
 
-  scene.switchTo();
+    const scene = viewer.createScene({
+      source,
+      geometry,
+      view
+    });
 
-  /* ===== DESKTOP SCROLL ZOOM ===== */
-  panoElement.addEventListener('wheel', e => {
-    e.preventDefault();
+    scene.switchTo();
 
-    const nextFov = view.fov() + e.deltaY * 0.002;
-    view.setFov(Math.max(MIN_FOV, Math.min(MAX_FOV, nextFov)));
-  }, { passive: false });
-
-  /* ===== MOBILE PINCH ZOOM ===== */
-  let startDist = null;
-
-  panoElement.addEventListener('touchstart', e => {
-    if (e.touches.length === 2) {
-      startDist = Math.hypot(
-        e.touches[0].pageX - e.touches[1].pageX,
-        e.touches[0].pageY - e.touches[1].pageY
-      );
-    }
-  }, { passive: false });
-
-  panoElement.addEventListener('touchmove', e => {
-    if (e.touches.length === 2 && startDist) {
+    panoElement.addEventListener('wheel', e => {
       e.preventDefault();
-
-      const newDist = Math.hypot(
-        e.touches[0].pageX - e.touches[1].pageX,
-        e.touches[0].pageY - e.touches[1].pageY
-      );
-
-      const delta = (startDist - newDist) * 0.002;
-      const nextFov = view.fov() + delta;
-
+      const nextFov = view.fov() + e.deltaY * 0.002;
       view.setFov(Math.max(MIN_FOV, Math.min(MAX_FOV, nextFov)));
-      startDist = newDist;
-    }
-  }, { passive: false });
+    }, { passive:false });
+
+    let startDist = null;
+    panoElement.addEventListener('touchstart', e => {
+      if (e.touches.length === 2) {
+        startDist = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+      }
+    }, { passive:false });
+
+    panoElement.addEventListener('touchmove', e => {
+      if (e.touches.length === 2 && startDist) {
+        e.preventDefault();
+        const newDist = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+        const delta = (startDist - newDist) * 0.002;
+        const nextFov = view.fov() + delta;
+        view.setFov(Math.max(MIN_FOV, Math.min(MAX_FOV, nextFov)));
+        startDist = newDist;
+      }
+    }, { passive:false });
+  }
+
+  // Tunggu layout stabil, lalu init
+  window.addEventListener('load', () => {
+    // sedikit delay supaya CSS height dihitung dulu
+    setTimeout(initPanorama, 100);
+  });
 </script>
+
 
 
 

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>360 Panorama – Wedding Project</title>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-gesture-detector@4.0.5/dist/aframe-gesture-detector.min.js"></script>
   <style>
     html, body {
       margin: 0;
@@ -19,10 +20,33 @@
 <body>
 
 <a-scene>
+   <a-entity
+    camera
+    look-controls
+    wasd-controls="enabled: false"
+    position="0 1.6 0"
+    fov="80">
+  </a-entity>
+  
   <a-sky 
     src="Panoramawcr.jpg">
   </a-sky>
 </a-scene>
+
+  <script>
+const sceneEl = document.querySelector('a-scene');
+
+sceneEl.addEventListener('loaded', () => {
+  const camera = sceneEl.camera.el;
+  let fov = 80;
+
+  window.addEventListener('wheel', (e) => {
+    fov += e.deltaY * 0.05;
+    fov = Math.min(100, Math.max(30, fov));
+    camera.setAttribute('camera', 'fov', fov);
+  });
+});
+</script>
 
 </body>
 </html>

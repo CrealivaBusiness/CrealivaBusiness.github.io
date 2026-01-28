@@ -16,6 +16,7 @@
   margin:80px auto;
   border-radius:18px;
   overflow:hidden;
+  position:relative;
 ">
 
   <div id="pano" style="width:100%; height:100%;"></div>
@@ -26,9 +27,9 @@
 
 <script>
   const panoElement = document.getElementById('pano');
-
   const isMobile = window.innerWidth < 768;
 
+  /* ===== VIEWER ===== */
   const viewer = new Marzipano.Viewer(panoElement, {
     controls: { mouseViewMode: 'drag' }
   });
@@ -39,14 +40,16 @@
 
   const geometry = new Marzipano.EquirectGeometry([{ width: 4000 }]);
 
-  /* ===== FOV SETTING ===== */
-  const DEFAULT_FOV = isMobile ? Math.PI / 4 : Math.PI / 2.2;
-  const MIN_FOV = Math.PI / 8;   // zoom in max (~3x)
-  const MAX_FOV = Math.PI / 2;   // zoom out max (~0.5x)
+  /* ===== FOV (ANTI GEPENG) ===== */
+  const DEFAULT_FOV = isMobile ? Math.PI / 3.2 : Math.PI / 2.6;
+  const MIN_FOV = Math.PI / 5;    // zoom in max (~3x)
+  const MAX_FOV = Math.PI / 2.3;  // zoom out max (~0.5x)
 
+  /* ===== LIMITER (BATASI ATAS BAWAH) ===== */
   const limiter = Marzipano.RectilinearView.limit.traditional(
     1024,
-    Math.PI
+    Math.PI,
+    { pitch: Math.PI / 4 } // << ini kunci anti gepeng
   );
 
   const view = new Marzipano.RectilinearView(
@@ -66,12 +69,8 @@
   panoElement.addEventListener('wheel', e => {
     e.preventDefault();
 
-    const newFov = Math.max(
-      MIN_FOV,
-      Math.min(MAX_FOV, view.fov() + e.deltaY * 0.004)
-    );
-
-    view.setFov(newFov);
+    const nextFov = view.fov() + e.deltaY * 0.002;
+    view.setFov(Math.max(MIN_FOV, Math.min(MAX_FOV, nextFov)));
   }, { passive: false });
 
   /* ===== MOBILE PINCH ZOOM ===== */
@@ -95,18 +94,15 @@
         e.touches[0].pageY - e.touches[1].pageY
       );
 
-      const delta = (startDist - newDist) * 0.005;
+      const delta = (startDist - newDist) * 0.002;
+      const nextFov = view.fov() + delta;
 
-      const newFov = Math.max(
-        MIN_FOV,
-        Math.min(MAX_FOV, view.fov() + delta)
-      );
-
-      view.setFov(newFov);
+      view.setFov(Math.max(MIN_FOV, Math.min(MAX_FOV, nextFov)));
       startDist = newDist;
     }
   }, { passive: false });
 </script>
+
 
 
 </body>

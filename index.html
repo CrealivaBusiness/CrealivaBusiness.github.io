@@ -131,19 +131,18 @@
 <section id="360-photo" style="
   width:100%;
   max-width:1100px;
-  height:300px;
+  height:320px;
   margin:80px auto;
   border-radius:18px;
   overflow:hidden;
-  position:relative;
 ">
 
-  <a-scene embedded gesture-detector style="width:100%; height:100%;">
+  <a-scene embedded style="width:100%; height:100%;">
     
     <a-entity
-      id="camera"
+      id="cam"
       camera="fov:80"
-      look-controls="touchEnabled: true; reverseMouseDrag: true"
+      look-controls="touchEnabled:true"
       wasd-controls="enabled:false"
       position="0 1.6 0">
     </a-entity>
@@ -153,24 +152,45 @@
   </a-scene>
 
   <script>
-    const scene = document.querySelector('#360-photo a-scene');
-    const camera = document.querySelector('#camera');
+    const scene = document.querySelector('#360-photo');
+    const cam = document.querySelector('#cam');
     let fov = 80;
 
-    /* DESKTOP: SCROLL ZOOM */
+    /* DESKTOP ZOOM */
     scene.addEventListener('wheel', e => {
       e.preventDefault();
       fov += e.deltaY * 0.05;
-      fov = Math.max(30, Math.min(100, fov));
-      camera.setAttribute('camera', 'fov', fov);
-    });
+      fov = Math.max(35, Math.min(95, fov));
+      cam.setAttribute('camera', 'fov', fov);
+    }, { passive:false });
 
-    /* MOBILE: PINCH ZOOM */
-    scene.addEventListener('pinchmove', e => {
-      fov -= e.detail.scale * 0.8;
-      fov = Math.max(30, Math.min(100, fov));
-      camera.setAttribute('camera', 'fov', fov);
-    });
+    /* MOBILE PINCH ZOOM */
+    let startDist = 0;
+
+    scene.addEventListener('touchstart', e => {
+      if (e.touches.length === 2) {
+        startDist = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+      }
+    }, { passive:false });
+
+    scene.addEventListener('touchmove', e => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const newDist = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+
+        fov -= (newDist - startDist) * 0.08;
+        fov = Math.max(35, Math.min(95, fov));
+        cam.setAttribute('camera', 'fov', fov);
+
+        startDist = newDist;
+      }
+    }, { passive:false });
   </script>
 
 </section>
@@ -513,6 +533,7 @@
 </body>
 
 </html>
+
 
 
 

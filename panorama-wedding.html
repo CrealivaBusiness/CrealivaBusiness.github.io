@@ -26,9 +26,7 @@
   const panoElement = document.getElementById('pano');
 
   const viewer = new Marzipano.Viewer(panoElement, {
-    controls: {
-      mouseViewMode: 'drag'
-    }
+    controls: { mouseViewMode: 'drag' }
   });
 
   const source = Marzipano.ImageUrlSource.fromString(
@@ -43,11 +41,7 @@
   );
 
   const view = new Marzipano.RectilinearView(
-    {
-      yaw: 0,
-      pitch: 0,
-      fov: Math.PI / 2
-    },
+    { yaw: 0, pitch: 0, fov: Math.PI / 2 },
     limiter
   );
 
@@ -59,16 +53,21 @@
 
   scene.switchTo();
 
-  /* DESKTOP: MOUSE WHEEL ZOOM */
+  /* =====================
+     ZOOM LIMIT SETTING
+     ===================== */
+  const MIN_FOV = Math.PI / 6; // zoom in max (3x)
+  const MAX_FOV = Math.PI / 1; // zoom out max (0.5x)
+
+  /* DESKTOP: SCROLL ZOOM */
   panoElement.addEventListener('wheel', e => {
     e.preventDefault();
-    const fov = view.fov();
     const newFov = Math.max(
-      Math.PI / 6,
-      Math.min(Math.PI / 1.3, fov + e.deltaY * 0.002)
+      MIN_FOV,
+      Math.min(MAX_FOV, view.fov() + e.deltaY * 0.002)
     );
     view.setFov(newFov);
-  }, { passive: false });
+  }, { passive:false });
 
   /* MOBILE: PINCH ZOOM */
   let startDist = 0;
@@ -85,19 +84,19 @@
   panoElement.addEventListener('touchmove', e => {
     if (e.touches.length === 2) {
       e.preventDefault();
+
       const newDist = Math.hypot(
         e.touches[0].pageX - e.touches[1].pageX,
         e.touches[0].pageY - e.touches[1].pageY
       );
 
       const delta = (startDist - newDist) * 0.003;
-      view.setFov(
-        Math.max(
-          Math.PI / 6,
-          Math.min(Math.PI / 1.3, view.fov() + delta)
-        )
+      const newFov = Math.max(
+        MIN_FOV,
+        Math.min(MAX_FOV, view.fov() + delta)
       );
 
+      view.setFov(newFov);
       startDist = newDist;
     }
   }, { passive:false });

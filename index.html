@@ -127,35 +127,46 @@
     </div>
 </section>
 
-<section id="360-photo">
-        <a-scene>
-   <a-entity
-    camera
-    look-controls
-    wasd-controls="enabled: false"
-    position="0 1.6 0"
-    fov="80">
-  </a-entity>
-  
-  <a-sky 
-    src="Panoramawcr.jpg">
-  </a-sky>
-</a-scene>
+<section id="360-photo" style="
+  width:100%;
+  max-width:1100px;
+  height:300px;
+  margin:80px auto;
+  border-radius:18px;
+  overflow:hidden;
+  position:relative;
+">
+
+  <a-scene embedded style="width:100%; height:100%;">
+    
+    <a-entity
+      camera
+      look-controls="reverseMouseDrag: true"
+      wasd-controls="enabled: false"
+      position="0 1.6 0"
+      fov="80">
+    </a-entity>
+
+    <a-sky src="Panoramawcr.jpg"></a-sky>
+
+  </a-scene>
 
   <script>
-const sceneEl = document.querySelector('a-scene');
+    const scene = document.querySelector('#360-photo a-scene');
 
-sceneEl.addEventListener('loaded', () => {
-  const camera = sceneEl.camera.el;
-  let fov = 80;
+    scene.addEventListener('loaded', () => {
+      const camera = scene.camera.el;
+      let fov = 80;
 
-  window.addEventListener('wheel', (e) => {
-    fov += e.deltaY * 0.05;
-    fov = Math.min(100, Math.max(30, fov));
-    camera.setAttribute('camera', 'fov', fov);
-  });
-});
-</script>
+      scene.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        fov += e.deltaY * 0.05;
+        fov = Math.max(30, Math.min(100, fov));
+        camera.setAttribute('camera', 'fov', fov);
+      });
+    });
+  </script>
+
 </section>
 
     <div class="container">
@@ -495,6 +506,7 @@ sceneEl.addEventListener('loaded', () => {
 </body>
 
 </html>
+
 
 
 

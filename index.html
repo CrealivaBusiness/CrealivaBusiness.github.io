@@ -78,7 +78,7 @@
                 <p>We continuously innovate to provide creative solutions and unique designs, in line with the latest trends.</p>
             </div>
             <div class="commitment-item">
-                <img src="service.png" alt="Ikon Layanan">
+                <img src="best_service.png" alt="Ikon Layanan">
                 <h3>Best Service</h3>
                 <p>Customer satisfaction is our top priority. We are committed to providing fast, responsive, and friendly service.</p>
             </div>
@@ -144,9 +144,42 @@
   overflow:hidden;
   position:relative;
 ">
-
+<img 
+  src="360 View Panorama.png" 
+  id="pano-icon" 
+  alt="Panorama icon"
+/>
   <div id="pano" style="width:100%; height:100%;"></div>
 
+<style>
+
+#pano {
+  width: 100%;
+  height: 100%;
+}
+
+#pano-icon {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 44px;
+  height: 44px;
+  opacity: 0.85;
+  z-index: 10;
+  pointer-events: none;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* Hover desktop saja */
+@media (hover: hover) {
+  #panorama:hover #pano-icon {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+
+  </style>
+	
 </section>
 
 <script src="https://unpkg.com/marzipano@0.10.2/dist/marzipano.js"></script>
@@ -573,6 +606,7 @@
 </body>
 
 </html>
+
 
 
 

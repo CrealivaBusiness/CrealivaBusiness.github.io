@@ -12,14 +12,14 @@
   <meta name="google-site-verification" content="m-oez1A4F_yt89DSm_Z8M4eMAKZ4NHfPDQjDYipAh_E">
   
   <!-- ═══ SEO & OG TAGS ═══ -->
-<meta name="description" content="Portfolio Willyam Qibson — Freelancer spesialis 3D Visualization, Layout Design & Digital Ads untuk bisnis properti, kuliner, dan brand lokal di Indonesia.">
+<meta name="description" content="Portfolio Willyam Qibson — Freelancer spesialis Modeling & Visualisasi SketchUp, Layout Design & Desain Grafis untuk bisnis properti, kuliner, dan brand lokal di Indonesia.">
 <meta name="keywords" content="freelancer desain grafis, 3D visualization, layout design, digital ads, Meta Ads, Google Ads, SketchUp, Enscape, portofolio kreatif, Jakarta">
 <meta name="author" content="Willyam Qibson">
 <meta name="robots" content="index, follow">
 
 <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
 <meta property="og:title" content="Crealiva — Portfolio Willyam Qibson">
-<meta property="og:description" content="Freelancer spesialis 3D Visualization, Layout Design & Digital Ads. Membantu bisnis properti, kuliner, dan brand lokal tampil lebih profesional.">
+<meta property="og:description" content="Freelancer spesialis Modeling & Visualisasi SketchUp, Layout Design & Desain Grafis. Membantu bisnis properti, kuliner, dan brand lokal tampil lebih profesional.">
 <meta property="og:image" content="https://crealivaportfolio.github.io/LogoCrealiva22.png">
 <meta property="og:url" content="https://crealivaportfolio.github.io/">
 <meta property="og:type" content="website">
@@ -29,7 +29,7 @@
 <!-- Twitter/X Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Crealiva — Portfolio Willyam Qibson">
-<meta name="twitter:description" content="Freelancer spesialis 3D Visualization, Layout Design & Digital Ads untuk bisnis properti, kuliner, dan brand lokal.">
+<meta name="twitter:description" content="Freelancer spesialis Modeling & Visualisasi SketchUp, Layout Design & Desain Grafis untuk bisnis properti, kuliner, dan brand lokal.">
 <meta name="twitter:image" content="https://crealivaportfolio.github.io/LogoCrealiva22.png">
 
 <style>
@@ -642,6 +642,12 @@ img { display:block; max-width:100%; }
 .footer-divider { border:none; border-top:1px solid rgba(255,255,255,.06); margin-bottom:24px; }
 .footer-copy { text-align:center; font-size:.8rem; color:rgba(255,255,255,.25); }
 
+/* Partnership (tengah) */
+.footer-partnership { text-align:center; flex:1 1 200px; }
+.footer-partnership h3 { font-size:0.88rem; font-weight:600; color:rgba(255,255,255,.55); margin-bottom:12px; }
+.footer-partnership .partnership-logos { display:flex; justify-content:center; align-items:center; gap:16px; }
+.footer-partnership .partnership-logo { height:36px; width:auto; object-fit:contain; opacity:.85; transition:opacity .3s var(--ease); }
+.footer-partnership .partnership-logo:hover { opacity:1; }
 /* ═══ MODAL ═══ */
 .modal { position:fixed; z-index:1001; inset:0; overflow:auto; background:rgba(11,17,32,.95); backdrop-filter:blur(12px); padding:60px 20px; opacity:0; visibility:hidden; transition:opacity .35s var(--ease), visibility .35s var(--ease); }
 .modal.show { opacity:1; visibility:visible; }
@@ -708,6 +714,7 @@ body.modal-open { overflow:hidden; }
   .slider-container{padding:0 10px;} .slider-btn{width:40px;height:40px;font-size:16px;}
   .contact-section{margin:40px 16px;padding:40px 28px;}
   .footer-content{flex-direction:column;align-items:center;text-align:center;}
+  .footer-partnership { order:2; margin:8px 0; }
   .commitment-background-logo{width:80vw!important;} .commitment-background-logo2{width:40vw!important;}
 }
 @media(max-width:430px){
@@ -2004,6 +2011,20 @@ body.modal-open { overflow:hidden; }
   }
 }
 
+/* ═══ NEW: LOGO OVERLAY — DYNAMIC INTERACTIVE PARALLAX ═══
+   Menambahkan sedikit transition manual di luar transform inline JS
+   supaya perubahan opacity/filter saat interaksi terasa halus. */
+.commitment-background-logo,
+.commitment-background-logo2 {
+  transition: opacity .6s ease, filter .6s ease;
+}
+.logo-parallax-active .commitment-background-logo {
+  opacity: .1 !important;
+}
+.logo-parallax-active .commitment-background-logo2 {
+  opacity: .09 !important;
+}
+
 </style>
 </head>
 <body>
@@ -2043,7 +2064,7 @@ body.modal-open { overflow:hidden; }
       <div class="hero-badge"><span></span>Creative Portfolio 2026</div>
       <h2 class="hero-title">Crealiva!</h2>
       <h2 class="hero-title2">Create &amp; Live Together</h2>
-      <p>Freelancer spesialis <strong style="color:#fff">3D Visualization, Layout Design & Digital Ads</strong> — membantu bisnis properti, kuliner, dan brand lokal tampil lebih profesional dan menarik di dunia digital.</p>
+      <p>Freelancer spesialis <strong style="color:#fff">Modeling & Visualisasi SketchUp, Layout Design & Desain Grafis</strong> — membantu bisnis properti, kuliner, dan brand lokal tampil lebih profesional dan menarik di dunia digital.</p>
       <div class="hero-cta-row">
         <a href="#portfolio" class="cta-button">Browse Works</a>
       </div>
@@ -2513,19 +2534,29 @@ body.modal-open { overflow:hidden; }
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer-content">
       <div class="footer-brand">
         <h3>Crealiva</h3>
         <p>Create &amp; Live Together</p>
+        <p>3D Modeling & Visualization, Layout Design & Graphic Design</p>
       </div>
+
+      <div class="footer-partnership">
+        <h3>Partnership</h3>
+        <div class="partnership-logos">
+          <img src="logo westart.png" alt="Partner 1" class="partnership-logo">
+          <img src="beefour logog.png" alt="Partner 2" class="partnership-logo">
+        </div>
+      </div>
+
       <div class="footer-contact">
-        <h3>Hubungi Saya</h3>
+        <h3>Hubungi Kami</h3>
         <ul>
           <li>Email: <a href="mailto:crealiva.business@gmail.com">crealiva.business@gmail.com</a></li>
-          <li>WhatsApp: <a href="https://wa.me/6287860382265" target="_blank">0878-6038-2265 (Willyam)</a></li>
+          <li>Personal: <a href="https://wa.me/6287860382265" target="_blank">0878-6038-2265 (Willyam)</a></li>
+          <li>Contact Person: <a href="https://wa.me/6285183195474" target="_blank">0851-8319-5474 (Sherlly)</a></li>
         </ul>
       </div>
     </div>
@@ -2738,55 +2769,122 @@ function kirimPesanWhatsApp(){
 }
 
 
-
-/* ─── PARALLAX LAG SCROLL — background logos ─── */
+/* ─── PARALLAX LAG SCROLL — background logos (LIVELIER + POSITION-BASED BLUR) ─── */
 (function(){
   var img1 = document.querySelector('.commitment-background-logo');
   var img2 = document.querySelector('.commitment-background-logo2');
   if(!img1 || !img2) return;
 
-  /* Pause the CSS keyframe animation — JS handles transform entirely */
   img1.style.animationPlayState = 'paused';
   img2.style.animationPlayState = 'paused';
 
-  /* Lerp smoothed scroll positions */
   var lag1 = 0, lag2 = 0;
+  var ease1 = 0.05, ease2 = 0.08;
 
-  /* ease factor: lower = more lag/delay */
-  var ease1 = 0.045; /* img1: slow, dreamy */
-  var ease2 = 0.075; /* img2: a bit quicker */
+  var str1 =  0.16;
+  var str2 = -0.13;
 
-  /* Parallax vertical shift per px scrolled — kept very small
-     so images never leave the viewport                        */
-  var str1 =  0.05;
-  var str2 = -0.04;
-
-  /* Time counter for idle float animation */
   var t = 0;
 
+  var mouseX = 0, mouseY = 0;
+  var mLag1X = 0, mLag1Y = 0;
+  var mLag2X = 0, mLag2Y = 0;
+  var mouseEase = 0.06;
+  var hasMouse = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var lastMouseMoveAt = 0;
+
+  if(hasMouse){
+    window.addEventListener('mousemove', function(e){
+      mouseX = (e.clientX / window.innerWidth  - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      lastMouseMoveAt = performance.now();
+    }, {passive:true});
+  }
+
+  var lastScrollY = window.scrollY || window.pageYOffset;
+  var spin1 = 0, spin2 = 0;
+  var scale1 = 1, scale2 = 1;
+  var drift1 = 0, drift2 = 0;
+
+  /* ── Blur = FUNGSI dari posisi scroll, LINEAR ──
+     Paling atas (scrollY=0) = jernih total.
+     Makin ke bawah discroll = makin blur, sampai mentok di MAX_BLUR
+     pada jarak BLUR_DISTANCE. Scroll balik ke atas = blur ikut berkurang lagi. */
+  var blur1 = 0, blur2 = 0;
+  var MAX_BLUR1 = 34;         /* px — max blur logo depan, tercapai pas scroll di paling BAWAH */
+  var MAX_BLUR2 = 26;         /* px — max blur logo belakang, tercapai pas scroll di paling BAWAH */
+  var BLUR_SMOOTH = 0.12;     /* transisi saat scrollY berubah */
+
+  /* Hitung tinggi halaman yang bisa discroll (dinamis, ikut scrollbar asli) */
+  function getMaxScroll(){
+    return Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  }
+
   function lerp(a, b, e){ return a + (b - a) * e; }
+  function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
 
   function tick(){
     var scrollY = window.scrollY || window.pageYOffset;
     t += 0.012;
 
-    /* Smoothly interpolate toward real scroll */
     lag1 = lerp(lag1, scrollY, ease1);
     lag2 = lerp(lag2, scrollY, ease2);
 
-    /* Parallax offset (small so image stays on screen) */
     var pOff1 = lag1 * str1;
     var pOff2 = lag2 * str2;
 
-    /* Idle float: smooth sinusoidal drift */
     var fY1 = Math.sin(t * 0.7)  * 9  + Math.sin(t * 0.4) * 5;
     var fY2 = Math.sin(t * 0.55 + 1.8) * 7 + Math.sin(t * 0.35) * 4;
     var fR1 = Math.sin(t * 0.38) * 0.8;
     var fR2 = Math.sin(t * 0.3  + 1.2) * 0.6;
 
-    /* Apply combined transform — keeps images fixed on screen */
-    img1.style.transform = 'translateY(' + (pOff1 + fY1).toFixed(2) + 'px) rotate(' + fR1.toFixed(3) + 'deg)';
-    img2.style.transform = 'translateY(' + (pOff2 + fY2).toFixed(2) + 'px) rotate(' + fR2.toFixed(3) + 'deg)';
+    mLag1X = lerp(mLag1X, mouseX, mouseEase);
+    mLag1Y = lerp(mLag1Y, mouseY, mouseEase);
+    mLag2X = lerp(mLag2X, mouseX, mouseEase * 0.6);
+    mLag2Y = lerp(mLag2Y, mouseY, mouseEase * 0.6);
+    var mOff1X = mLag1X * 26, mOff1Y = mLag1Y * 16;
+    var mOff2X = mLag2X * -14, mOff2Y = mLag2Y * -9;
+
+    var vel = scrollY - lastScrollY;
+    lastScrollY = scrollY;
+
+    spin1 = lerp(spin1, clamp(vel * 1.3, -34, 34), 0.16);
+    spin2 = lerp(spin2, clamp(vel * -0.95, -26, 26), 0.13);
+    scale1 = lerp(scale1, 1 + clamp(Math.abs(vel) * 0.002, 0, 0.08), 0.12);
+    scale2 = lerp(scale2, 1 + clamp(Math.abs(vel) * 0.0017, 0, 0.06), 0.12);
+
+    var dir = vel > 0.5 ? 1 : (vel < -0.5 ? -1 : 0);
+    if(dir !== 0){
+      drift1 = clamp(drift1 + dir * 0.35, -55, 55);
+      drift2 = clamp(drift2 - dir * 0.28, -45, 45);
+    } else {
+      drift1 = lerp(drift1, 0, 0.02);
+      drift2 = lerp(drift2, 0, 0.02);
+    }
+
+    /* Target blur murni dari POSISI scroll, linear naik dari atas ke bawah */
+    /* Target blur murni dari POSISI scroll, relatif ke tinggi halaman asli (0% atas → 100% bawah) */
+    var maxScroll = getMaxScroll();
+    var scrollRatio = clamp(scrollY / maxScroll, 0, 1);
+    var targetBlur1 = scrollRatio * MAX_BLUR1;
+    var targetBlur2 = scrollRatio * MAX_BLUR2;
+
+    blur1 = lerp(blur1, targetBlur1, BLUR_SMOOTH);
+    blur2 = lerp(blur2, targetBlur2, BLUR_SMOOTH);
+
+    img1.style.transform =
+      'translate(' + (mOff1X).toFixed(2) + 'px,' + (pOff1 + fY1 + mOff1Y).toFixed(2) + 'px) ' +
+      'rotate(' + (fR1 + spin1 + drift1).toFixed(3) + 'deg) scale(' + scale1.toFixed(3) + ')';
+    img2.style.transform =
+      'translate(' + (mOff2X).toFixed(2) + 'px,' + (pOff2 + fY2 + mOff2Y).toFixed(2) + 'px) ' +
+      'rotate(' + (fR2 + spin2 + drift2).toFixed(3) + 'deg) scale(' + scale2.toFixed(3) + ')';
+
+    img1.style.setProperty('filter', 'saturate(0) brightness(5) blur(' + blur1.toFixed(2) + 'px)', 'important');
+    img2.style.setProperty('filter', 'saturate(0) brightness(5) blur(' + blur2.toFixed(2) + 'px)', 'important');
+
+    var mouseRecentlyMoved = hasMouse && (performance.now() - lastMouseMoveAt) < 600;
+    var active = mouseRecentlyMoved || Math.abs(vel) > 2;
+    document.documentElement.classList.toggle('logo-parallax-active', active);
 
     requestAnimationFrame(tick);
   }
@@ -2999,7 +3097,7 @@ function kirimPesanWhatsApp(){
 
   var t = {
     en: {
-      'hero.desc.html': 'Freelancer specialist in <strong style="color:#fff">3D Visualization, Layout Design & Digital Ads</strong> — helping property, culinary, and local brand businesses look more professional and attractive in the digital world.',
+      'hero.desc.html': 'Freelancer specialist in <strong style="color:#fff">SketchUp Modelling & Visualization, Layout Design & Graphic Design</strong> — helping property, culinary, and local brand businesses look more professional and attractive in the digital world.',
       'about.main': 'About', 'about.accent': 'Me',
       'about.bio': 'Hello! I\'m Willyam Qibson, an active student at Universitas Terbuka with over 3 years of experience as a Graphic Designer & Advertiser. I specialize in digital creative fields such as layout design (posters, banners, etc.), photo editing, video editing, and 3D Modeling & visualization using SketchUp and Enscape.',
       'about.stat1': 'Years of Exp.', 'about.stat2': 'Projects Done', 'about.stat3': 'Happy Clients', 'about.stat4': 'Core Skills',
@@ -3039,11 +3137,11 @@ function kirimPesanWhatsApp(){
       'contact.name': 'Your Name', 'contact.email': 'Your Email', 'contact.message': 'Your Message',
       'contact.btn': 'Send Message via WhatsApp →',
       'testi.main': 'What', 'testi.accent': 'They Say.',
-      'footer.contact': 'Contact Me',
+      'footer.contact': 'Contact Us',
       'footer.copy': '© 2026 Crealiva. All Rights Reserved.'
     },
     id: {
-      'hero.desc.html': 'Freelancer spesialis <strong style="color:#fff">3D Visualization, Layout Design & Digital Ads</strong> — membantu bisnis properti, kuliner, dan brand lokal tampil lebih profesional dan menarik di dunia digital.',
+      'hero.desc.html': 'Freelancer spesialis <strong style="color:#fff">Modeling & Visualisasi SketchUp, Layout Design & Desain Grafis</strong> — membantu bisnis properti, kuliner, dan brand lokal tampil lebih profesional dan menarik di dunia digital.',
       'about.main': 'Tentang', 'about.accent': 'Saya',
       'about.bio': 'Halo semua! Perkenalkan nama saya Willyam Qibson mahasiswa aktif di Universitas Terbuka dan memiliki pengalaman berkerja sebagai Graphic Design & Advertiser selama lebih dari 3 tahun. Saya memiliki keahilan dibidang digital kreatif seperti layout design (poster, banner, dll), photo editing, video editing, dan juga 3D Modeling dan visualisasi seperti Sketchup dan Enscape.',
       'about.stat1': 'Tahun Pengalaman', 'about.stat2': 'Proyek Selesai', 'about.stat3': 'Klien Puas', 'about.stat4': 'Keahlian Utama',

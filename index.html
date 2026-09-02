@@ -3321,46 +3321,60 @@ function kirimPesanWhatsApp(){
   <span class="wa-float-label">Chat Sekarang</span>
 </a>
 
-<!-- ═══ CURSOR GLOW — Blue Gradient Pulse ═══ -->
+<!-- ═══ CURSOR GLOW — Blue Gradient Pulse (fixed) ═══ -->
 <style>
-.cursor-glow {
+.cursor-glow-wrap {
   position: fixed;
   top: 0;
   left: 0;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
+  width: 0;
+  height: 0;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle,
-      rgba(61,142,255,.55) 0%,
-      rgba(26,111,255,.28) 32%,
-      rgba(26,111,255,.08) 60%,
-      transparent 75%);
-  mix-blend-mode: screen;
-  will-change: transform, opacity;
-  animation: cursorGlowPulse 2.6s ease-in-out infinite;
   opacity: 0;
-  transition: opacity .4s ease;
+  transition: opacity .5s ease;
 }
-.cursor-glow.active { opacity: 1; }
+.cursor-glow-wrap.active { opacity: 1; }
+
+.cursor-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 480px;
+  height: 480px;
+  margin-left: -240px;
+  margin-top: -240px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+      rgba(90,160,255,.45) 0%,
+      rgba(70,145,255,.32) 14%,
+      rgba(50,125,255,.22) 28%,
+      rgba(38,110,255,.14) 42%,
+      rgba(26,111,255,.08) 56%,
+      rgba(26,111,255,.035) 70%,
+      rgba(26,111,255,.01) 85%,
+      transparent 100%);
+  mix-blend-mode: screen;
+  will-change: transform, filter;
+  animation: cursorGlowPulse 2.8s ease-in-out infinite;
+}
 
 @keyframes cursorGlowPulse {
-  0%, 100% { filter: brightness(1) blur(0px); transform: translate(-50%, -50%) scale(1); }
-  50%      { filter: brightness(1.6) blur(2px); transform: translate(-50%, -50%) scale(1.12); }
+  0%, 100% { transform: scale(1);    filter: brightness(1)   blur(6px); }
+  50%      { transform: scale(1.15); filter: brightness(1.55) blur(4px); }
 }
 
-/* Sembunyikan di perangkat sentuh (tidak ada cursor beneran) */
 @media (hover: none) and (pointer: coarse) {
-  .cursor-glow { display: none; }
+  .cursor-glow-wrap { display: none; }
 }
 </style>
-<div class="cursor-glow" id="cursorGlow"></div>
+<div class="cursor-glow-wrap" id="cursorGlowWrap">
+  <div class="cursor-glow"></div>
+</div>
 <script>
 (function(){
-  var glow = document.getElementById('cursorGlow');
-  if(!glow) return;
+  var wrap = document.getElementById('cursorGlowWrap');
+  if(!wrap) return;
   if(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
 
   var mx = window.innerWidth / 2, my = window.innerHeight / 2;
@@ -3371,20 +3385,20 @@ function kirimPesanWhatsApp(){
   window.addEventListener('mousemove', function(e){
     mx = e.clientX;
     my = e.clientY;
-    if(!shown){ shown = true; glow.classList.add('active'); }
+    if(!shown){ shown = true; wrap.classList.add('active'); }
   }, {passive:true});
 
   window.addEventListener('mouseleave', function(){
-    glow.classList.remove('active');
+    wrap.classList.remove('active');
   });
   window.addEventListener('mouseenter', function(){
-    if(shown) glow.classList.add('active');
+    if(shown) wrap.classList.add('active');
   });
 
   function tick(){
     gx += (mx - gx) * ease;
     gy += (my - gy) * ease;
-    glow.style.transform = 'translate(' + gx.toFixed(1) + 'px,' + gy.toFixed(1) + 'px) translate(-50%,-50%)';
+    wrap.style.transform = 'translate(' + gx.toFixed(1) + 'px,' + gy.toFixed(1) + 'px)';
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);

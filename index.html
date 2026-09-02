@@ -3321,5 +3321,75 @@ function kirimPesanWhatsApp(){
   <span class="wa-float-label">Chat Sekarang</span>
 </a>
 
+<!-- ═══ CURSOR GLOW — Blue Gradient Pulse ═══ -->
+<style>
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle,
+      rgba(61,142,255,.55) 0%,
+      rgba(26,111,255,.28) 32%,
+      rgba(26,111,255,.08) 60%,
+      transparent 75%);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  animation: cursorGlowPulse 2.6s ease-in-out infinite;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+.cursor-glow.active { opacity: 1; }
+
+@keyframes cursorGlowPulse {
+  0%, 100% { filter: brightness(1) blur(0px); transform: translate(-50%, -50%) scale(1); }
+  50%      { filter: brightness(1.6) blur(2px); transform: translate(-50%, -50%) scale(1.12); }
+}
+
+/* Sembunyikan di perangkat sentuh (tidak ada cursor beneran) */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-glow { display: none; }
+}
+</style>
+<div class="cursor-glow" id="cursorGlow"></div>
+<script>
+(function(){
+  var glow = document.getElementById('cursorGlow');
+  if(!glow) return;
+  if(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
+  var mx = window.innerWidth / 2, my = window.innerHeight / 2;
+  var gx = mx, gy = my;
+  var ease = 0.15;
+  var shown = false;
+
+  window.addEventListener('mousemove', function(e){
+    mx = e.clientX;
+    my = e.clientY;
+    if(!shown){ shown = true; glow.classList.add('active'); }
+  }, {passive:true});
+
+  window.addEventListener('mouseleave', function(){
+    glow.classList.remove('active');
+  });
+  window.addEventListener('mouseenter', function(){
+    if(shown) glow.classList.add('active');
+  });
+
+  function tick(){
+    gx += (mx - gx) * ease;
+    gy += (my - gy) * ease;
+    glow.style.transform = 'translate(' + gx.toFixed(1) + 'px,' + gy.toFixed(1) + 'px) translate(-50%,-50%)';
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+	
 </body>
 </html>
